@@ -1,0 +1,191 @@
+// @import url(https://fonts.googleapis.com/css?family=Poiret+One);
+
+// h1 {
+//     font-family: 'Poiret One';
+//     text-align: center;
+// }
+
+// table, th, td, tr {
+//     border: 1px solid black;
+//     padding: 5px;
+//     text-align: center;
+// }
+// .schedule-rows:hover {
+//     background-color: #d2dae2;
+// }
+
+// @mixin button-bg($bg) {
+//     background: $bg;
+//     &:hover {
+//       background:darken($bg,8%);
+//       transition: all 0.3s ease;
+//     }
+//     &:active {
+//       background:darken($bg,25%);
+//     } 
+// }
+
+// .btn {
+//     color:white;
+//     // background-color: #acceba;
+//     // background-color: #3498db;
+//     // background-color: #f1c40f;
+//     // background-color: #e74c3c;
+//     text-decoration: none;
+//     padding:10px 20px;
+//     border-radius:2px;
+//     font-family: 'Poiret One';
+//     font-size:1.5em;
+// }
+// .btn-green {
+//     @include button-bg(#05c46b);
+// }
+
+
+
+
+
+$blue:    #9ccef0;
+$purple:  #9b59b6;
+$navy:    #34495e;
+$green:   #2ecc71;
+$red:     #e74c3c;
+$orange:  #f39c12;
+
+.blue   { background: $blue }
+.purple { background: $purple }
+.navy   { background: $navy }
+.green  { background: $green }
+.red    { background: $red }
+.orange { background: $orange }
+
+h1 {
+    font-family: Helvetica;
+    text-align: center;
+}
+
+body {
+    background: #ecf0f1; 
+    padding: 30px;
+}
+
+table {
+    font-family: Helvetica;
+    color: #efefef;
+  
+    border: 2px solid gray;
+    padding: 0;
+    border-spacing: 0;
+   
+  
+    tr {   
+        background: #fff; 
+    }
+   
+    th {
+        padding: 1em; 
+        width: 10em;
+        border: 1px solid gray;
+    }
+
+    td {
+        padding: 0.2em; 
+        width: 10em;
+        border: 1px solid gray;
+    }
+}
+
+.dates {
+    background: $navy;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.hours {
+    background: $navy;
+    font-size: 0.7em;
+    text-align: center;
+    // width: 70px!important;
+}
+
+.btn {
+    display: block;
+    background-color: d2dae2;
+    width: 100%;
+    border: none;
+    padding: 15px 40px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+.btn:hover {
+    background-color: $blue;
+}
+
+
+// .free, .taken, .pause, .closed, .test1, .test2 {
+//     font-weight: 300;
+//     cursor:pointer;
+// }
+
+
+// // Tooltip Stuff by Chris Bracco
+// /* Add this attribute to the element that needs a tooltip */
+// [data-tooltip] {
+// 	position: relative;
+// 	z-index: 2;
+// 	cursor: pointer;
+ 
+// }
+
+// /* Hide the tooltip content by default */
+// [data-tooltip]:before,
+// [data-tooltip]:after {
+//   visibility: hidden;
+// 	@include opacity(0);
+// 	pointer-events: none;
+//   @include transition(0.5s ease all);
+// }
+
+// /* Position tooltip above the element */
+// [data-tooltip]:before {
+// 	position: absolute;
+// 	bottom: 110%;
+// 	left: 50%;
+// 	margin-bottom: 5px;
+// 	margin-left: -80px;
+// 	padding: 7px;
+// 	width: 160px;
+// 	@include border-radius(6px);
+   
+// 	background-color: black;
+// 	color: #fff;
+// 	content: attr(data-tooltip);
+// 	text-align: center;
+// 	font-size: 14px;
+// 	line-height: 1.2;
+// }
+
+// /* Triangle hack to make tooltip look like a speech bubble */
+// [data-tooltip]:after {
+// 	position: absolute;
+// 	bottom: 110%;
+// 	left: 50%;
+// 	margin-left: -5px;
+// 	width: 0;
+// 	border-top: 5px solid black;
+// 	border-right: 5px solid transparent;
+// 	border-left: 5px solid transparent;
+// 	content: " ";
+// 	font-size: 0;
+// 	line-height: 0;
+// }
+
+// /* Show tooltip content on hover */
+// [data-tooltip]:hover:before,
+// [data-tooltip]:hover:after {
+// 	visibility: visible;
+//   bottom: 90%;
+// 	@include opacity(1);
+// }
