@@ -19,7 +19,7 @@ h1 {
 
 body {
     background: #ecf0f1; 
-    padding: 30px;
+    padding: 15px;
 }
 
 table {
@@ -68,6 +68,7 @@ table {
     // background-color: #d2dae2;
     width: 100%;
     border: none;
+    border-radius: 8px;
     padding: 15px 40px;
     cursor: pointer;
     font-size: 16px;
@@ -75,6 +76,7 @@ table {
 }
 .btn:hover {
     background-color: $blue;
+    border-radius: 8px;
 }
 .btn:disabled {
     background-color: #eeb6b6;

@@ -1,7 +1,6 @@
 import React from 'react';
 import Scheduler from './Scheduler';
 import ScheduleContext from '../context/schedule-context';
-// import {appointmentReducer} from '../reducers/appointmentReducer';
 import visibleDays from '../selectors/visibleDays';
 import scheduleHours from '../selectors/scheduleHours';
 

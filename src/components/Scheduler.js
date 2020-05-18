@@ -11,6 +11,7 @@ const Scheduler = () => {
         <div className="tab">
             <table>
                 <tbody>
+                    
                     <tr className="dates">
                         <th></th>
                         {visibleDays.map(day => (
