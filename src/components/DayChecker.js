@@ -1,135 +1,81 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+// import { appointmentReducer } from '../reducers/appointmentReducer';
+// const [appointments, dispatchAppointments] = useReducer(appointmentReducer, []);
 import moment from 'moment';
-import Modal from 'react-modal';
+import { appointmentReducer } from '../reducers/appointmentReducer';
 
-const DayChecker = ({ day, period }) => {
+const DayChecker = ({ date, time }) => {
 
     /* formatted time variables */
-    const dayInt = parseInt(day.slice(4));                    // turns 'ddd DD' date into DD integer
-    const splitHours = period.split(':');                     // splits half hour windows into array
-    const hourInt = parseInt(splitHours[0] + splitHours[1])   // converts 'hh:mm' string into hhmm integer
+    const dateInt = parseInt(date.slice(4));                // turns 'ddd DD' date into DD integer
+    const splitTime = time.split(':');                      // splits half hour windows into array
+    const timeInt = parseInt(splitTime[0] + splitTime[1])   // converts 'hh:mm' string into hhmm integer
 
     /* Checking for pair saturdays in current month */
     const secondSaturday = moment().startOf('month').day('Saturday').add(7,'d').date();
     const fourthSaturday = moment().startOf('month').day('Saturday').add(21,'d').date();
     
-    const pairSaturday = day.includes('Sat') && (dayInt === secondSaturday || dayInt === fourthSaturday);
-    const oddSaturday = day.includes('Sat') && !pairSaturday
-    const sunday = day.includes('Sun');
+    const pairSaturday = date.includes('Sat') && (dateInt === secondSaturday || dateInt === fourthSaturday);
+    const oddSaturday = date.includes('Sat') && !pairSaturday
+    const sunday = date.includes('Sun');
     const weekday = !sunday && !pairSaturday && !oddSaturday;
-    const evenWeekday = weekday && (dayInt % 2 === 0);
+    const evenWeekday = weekday && (dateInt % 2 === 0);
     const oddWeekday = weekday && !evenWeekday;
 
-    const morningShift = (evenWeekday || pairSaturday) && (hourInt > 1330 || hourInt === 1100);
-    const afternoonShift = oddWeekday && (hourInt < 1300 || hourInt === 1600);
-    const closed = sunday || oddSaturday || morningShift || afternoonShift;
+    const morningPause = (evenWeekday || pairSaturday) && (timeInt === 1100);
+    const afternoonPause = oddWeekday && (timeInt === 1600);
 
-    console.log(dayInt, hourInt, closed);    
-    // const randomAppointments = [];
+    const morningShift = (evenWeekday || pairSaturday) && (timeInt > 1330);
+    const afternoonShift = oddWeekday && (timeInt < 1300 || timeInt === 1600);
+
+    const isPause = morningPause || afternoonPause;
+    const isClosed = sunday || oddSaturday || morningShift || afternoonShift;
+
+    const initialState = () => JSON.parse(window.localStorage.getItem('appointment'));
+    const [appointment, setAppointment] = useState(initialState);
+
+    const handleAppointment = () => {
+        // dispatchAppointments({ type: 'ADD_APPOINTMENT', date: date, time: time });
+        console.log(`clicked on ${date} - ${time}`);        
+        setAppointment({
+            date: date,
+            time: time,
+            isClicked: true
+        })
+        if (appointment.isClicked) {
+            // dispatchAppointments({ type: 'REMOVE_APPOINTMENT', date: date });
+            setAppointment({
+                date: '',
+                time: '',
+                isClicked: false
+            })
+        }
+    }
+
+    // useEffect(() => {
+    //     const appointment = JSON.parse(localStorage.getItem('appointment'));
+    //     if (appointmentReducer) {
+    //         setAppointment(appointment);
+    //     }
+    // }, []);
+
+    useEffect(() => {
+        window.localStorage.setItem('appointment', JSON.stringify(appointment));
+        console.log(appointment);
+    }, [appointment]);
 
 
-    // console.log(day, period, dayInt, hourInt);
-    // console.log(`${day} ${period} \n EvenWeekday: ${evenWeekday} \n OddWeekday: ${oddWeekday} \n PairSaturday: ${pairSaturday} \n OddSaturday: ${oddSaturday} \n Sunday: ${sunday}`);
-
-    /* TO DO: 
-        1) random generator for taken appointments
-        2) modal to confirm appointment
-        3) populate local storage after making appointment
-        4) allow only 1 appointment a day and 2 per week
-        5) css styling for closedDays, lunchBreak, takenAppointments, myAppointments 
-    */
-
-    const clickHandler = () => {
-        console.log(`clicked on ${day} - ${period}`);        
+    const handleButtonStyle = () => {
+        if (appointment.isClicked) { return 'btn--clicked' }
+        else if (isPause) { return 'btn--pause' }
+        else { return 'btn'}
     }
 
     return (
         <>
-            <button className="btn" onClick={clickHandler} disabled={closed}></button>
+            <button className={handleButtonStyle()} onClick={handleAppointment} disabled={isClosed || isPause}></button>
         </>
     )
 }
 
 export default DayChecker;
-
-
-
-
-
-/* {scheduleHours.map(period => (
-                <tr key={period}>
-                    <td className="hours">{period}</td>
-                    {
-                     visibleDays.map(day => (
-                        <td key={day+period} className="slots">
-                            <button className="btn" onClick={clickHandler}></button>
-                        </td>
-                        ))
-                    }
-                </tr>
-            ))} */
-
-    
-    // const [isEvenWeekday, setIsEvenWeekday] = useState();
-    // // const [isOddWeekday, setIsOddWeekday] = useState();
-    // const [isPairSaturday, setIsPairSaturday] = useState();
-    // const [isClosed, setIsClosed] = useState();     // sundays and odd saturdays
-
-    /* incorporate all together */
-    // const dayHandler = () => {
-    //     if (day.includes('Sun') || !pairSaturday) {     // sunday or odd saturday
-    //         setIsEvenWeekday(false);
-    //         setIsPairSaturday(false);
-    //         setIsClosed(true);
-    //     } else if (day.includes('Sat') && pairSaturday) {   // pair saturday
-    //         setIsEvenWeekday(false);
-    //         setIsPairSaturday(true);
-    //         setIsClosed(false);
-    //     } else if (!isWeekend && day % 2 === 0) {     // even weekday
-    //         setIsEvenWeekday(true);
-    //         setIsPairSaturday(false);
-    //         setIsClosed(false);
-    //     } else if (!isWeekend && day % 2 === 1) {                        // odd weekday
-    //         setIsEvenWeekday(false);
-    //         setIsPairSaturday(false);
-    //         setIsClosed(false);
-    //     }
-    // }
-    // useEffect(() => {
-    //     dayHandler();
-    // }, [])
-
-    // console.log(`isEvenWeekday: ${isEvenWeekday} \n isPairSaturday: ${isPairSaturday} \n isClosed: ${isClosed} `);
-
-
-    
-// const initialState = {
-//     isSunday: undefined,
-//     isPairSaturday: undefined,
-//     isEvenWeekday: undefined
-// };
-// const dayReducer = (state = initialState, action) => {
-//     switch (action.type) {
-//         case 'CLOSED':
-//             return {
-//                 isSunday: true,
-//                 isPairSaturday: false,
-//                 isEvenWeekday: false
-//             };
-//         case 'PAIR_SATURDAY':
-//             return {
-//                 isSunday: false,
-//                 isPairSaturday: true,
-//                 isEvenWeekday: true
-//             };
-//         case 'EVEN_WEEKDAY':
-//             return {
-//                 isSunday: false,
-//                 isPairSaturday: false,
-//                 isEvenWeekday: true
-//             };
-//         default:
-//             return state;
-//     }
-// }
-    // const [state, dispatch] = useReducer(dayReducer, initialState);

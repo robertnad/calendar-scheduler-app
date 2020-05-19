@@ -14,18 +14,18 @@ const Scheduler = () => {
                     
                     <tr className="dates">
                         <th></th>
-                        {visibleDays.map(day => (
-                            <th key={day}>{day}</th>
+                        {visibleDays.map(date => (
+                            <th key={date}>{date}</th>
                         ))}
                     </tr>
 
-                    {scheduleHours.map(period => (
-                        <tr key={period}>
-                            <td className="hours">{period}</td>
+                    {scheduleHours.map(time => (
+                        <tr key={time}>
+                            <td className="hours">{time}</td>
                             {
-                            visibleDays.map(day => (
-                                <td key={day+period} className="slots">
-                                    <DayChecker day={day} period={period} />
+                            visibleDays.map(date => (
+                                <td key={date+time} className="slots">
+                                    <DayChecker date={date} time={time} />
                                 </td>
                                 ))
                             }

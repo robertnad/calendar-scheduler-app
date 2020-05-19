@@ -1,9 +1,9 @@
 $blue:    #9ccef0;
 $purple:  #9b59b6;
-$navy:    #34495e;
-$green:   #2ecc71;
+$navy:    #445668;
+$green:   #50db8a;
 $red:     #e74c3c;
-$orange:  #f39c12;
+$orange:  #e0b671;
 
 .blue   { background: $blue }
 .purple { background: $purple }
@@ -60,19 +60,17 @@ table {
     font-size: 0.7em;
     text-align: center;
     // vertical-align: text-top;
-    // width: 70px!important;
 }
 
 .btn {
     display: block;
-    // background-color: #d2dae2;
+    background-color: #d2dae2;
     width: 100%;
     border: none;
     border-radius: 8px;
     padding: 15px 40px;
-    cursor: pointer;
     font-size: 16px;
-    text-align: center;
+    cursor: pointer;
 }
 .btn:hover {
     background-color: $blue;
@@ -82,69 +80,28 @@ table {
     background-color: #eeb6b6;
     cursor: not-allowed;
 }
+.btn--pause {
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    padding: 15px 40px;
+    font-size: 16px;
+    background-color: $orange;
+    cursor: not-allowed;
+}
 
-// .free, .taken, .pause, .closed, .test1, .test2 {
-//     font-weight: 300;
-//     cursor:pointer;
-// }
-
-
-// // Tooltip Stuff by Chris Bracco
-// /* Add this attribute to the element that needs a tooltip */
-// [data-tooltip] {
-// 	position: relative;
-// 	z-index: 2;
-// 	cursor: pointer;
- 
-// }
-
-// /* Hide the tooltip content by default */
-// [data-tooltip]:before,
-// [data-tooltip]:after {
-//   visibility: hidden;
-// 	@include opacity(0);
-// 	pointer-events: none;
-//   @include transition(0.5s ease all);
-// }
-
-// /* Position tooltip above the element */
-// [data-tooltip]:before {
-// 	position: absolute;
-// 	bottom: 110%;
-// 	left: 50%;
-// 	margin-bottom: 5px;
-// 	margin-left: -80px;
-// 	padding: 7px;
-// 	width: 160px;
-// 	@include border-radius(6px);
-   
-// 	background-color: black;
-// 	color: #fff;
-// 	content: attr(data-tooltip);
-// 	text-align: center;
-// 	font-size: 14px;
-// 	line-height: 1.2;
-// }
-
-// /* Triangle hack to make tooltip look like a speech bubble */
-// [data-tooltip]:after {
-// 	position: absolute;
-// 	bottom: 110%;
-// 	left: 50%;
-// 	margin-left: -5px;
-// 	width: 0;
-// 	border-top: 5px solid black;
-// 	border-right: 5px solid transparent;
-// 	border-left: 5px solid transparent;
-// 	content: " ";
-// 	font-size: 0;
-// 	line-height: 0;
-// }
-
-// /* Show tooltip content on hover */
-// [data-tooltip]:hover:before,
-// [data-tooltip]:hover:after {
-// 	visibility: visible;
-//   bottom: 90%;
-// 	@include opacity(1);
-// }
+.btn--clicked {
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    padding: 15px 40px;
+    font-size: 16px;
+    background-color: $green;
+    cursor: pointer;
+}
+.btn--clicked:hover {
+    background-color: #53926d;
+    border-radius: 8px;
+}
