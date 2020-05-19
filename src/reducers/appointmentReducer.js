@@ -1,6 +1,7 @@
 const appointmentsDefaultState = [{
-        date: undefined,
-        time: undefined
+        date: '',
+        time: '',
+        isClicked: false
     }]
 
 export const appointmentReducer = (state = appointmentsDefaultState, action) => {
@@ -12,12 +13,13 @@ export const appointmentReducer = (state = appointmentsDefaultState, action) => 
                 ...state,
                 {
                     date: action.date,
-                    time: action.time
+                    time: action.time,
+                    isClicked: true
                 }
             ];
         case 'DELETE_APPOINTMENT':
             return state.filter(appointment => (
-                appointment.date !== action.date //&& !appointment.time.contains(action.time)
+                appointment.date !== action.date && !appointment.time !== action.time
             ));
         default:
             return state;

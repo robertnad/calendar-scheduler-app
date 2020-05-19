@@ -1,8 +1,6 @@
+  
 import React, { useState, useEffect } from 'react';
-// import { appointmentReducer } from '../reducers/appointmentReducer';
-// const [appointments, dispatchAppointments] = useReducer(appointmentReducer, []);
 import moment from 'moment';
-import { appointmentReducer } from '../reducers/appointmentReducer';
 
 const DayChecker = ({ date, time }) => {
 
@@ -31,19 +29,24 @@ const DayChecker = ({ date, time }) => {
     const isPause = morningPause || afternoonPause;
     const isClosed = sunday || oddSaturday || morningShift || afternoonShift;
 
-    const initialState = () => JSON.parse(window.localStorage.getItem('appointment'));
+
+
+
+    const initialState = () => JSON.parse(localStorage.getItem('appointment'));
+    // console.log(localStorage.getItem('appointment'));
+    
     const [appointment, setAppointment] = useState(initialState);
 
+    // click button - adds appointment
     const handleAppointment = () => {
-        // dispatchAppointments({ type: 'ADD_APPOINTMENT', date: date, time: time });
         console.log(`clicked on ${date} - ${time}`);        
         setAppointment({
             date: date,
             time: time,
             isClicked: true
         })
+        // unclick button - deletes appointment
         if (appointment.isClicked) {
-            // dispatchAppointments({ type: 'REMOVE_APPOINTMENT', date: date });
             setAppointment({
                 date: '',
                 time: '',
@@ -60,8 +63,9 @@ const DayChecker = ({ date, time }) => {
     // }, []);
 
     useEffect(() => {
-        window.localStorage.setItem('appointment', JSON.stringify(appointment));
+        localStorage.setItem('appointment', JSON.stringify(appointment));
         console.log(appointment);
+        const data1 = JSON.parse(localStorage.getItem('appointment'));
     }, [appointment]);
 
 
