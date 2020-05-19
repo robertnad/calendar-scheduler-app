@@ -1,4 +1,3 @@
-  
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 
@@ -9,7 +8,7 @@ const DayChecker = ({ date, time }) => {
     const splitTime = time.split(':');                      // splits half hour windows into array
     const timeInt = parseInt(splitTime[0] + splitTime[1])   // converts 'hh:mm' string into hhmm integer
 
-    /* Checking for pair saturdays in current month */
+    // constants holding day states
     const secondSaturday = moment().startOf('month').day('Saturday').add(7,'d').date();
     const fourthSaturday = moment().startOf('month').day('Saturday').add(21,'d').date();
     
@@ -30,10 +29,8 @@ const DayChecker = ({ date, time }) => {
     const isClosed = sunday || oddSaturday || morningShift || afternoonShift;
 
 
-
-
-    const initialState = () => JSON.parse(localStorage.getItem('appointment'));
-    // console.log(localStorage.getItem('appointment'));
+    // function that gets stored appointments from localStorage - called in useState hook
+    const initialState = () => JSON.parse(localStorage.getItem(dateInt + timeInt));
     
     const [appointment, setAppointment] = useState(initialState);
 
@@ -46,7 +43,7 @@ const DayChecker = ({ date, time }) => {
             isClicked: true
         })
         // unclick button - deletes appointment
-        if (appointment.isClicked) {
+        if (appointment && appointment.isClicked) {
             setAppointment({
                 date: '',
                 time: '',
@@ -55,24 +52,21 @@ const DayChecker = ({ date, time }) => {
         }
     }
 
-    // useEffect(() => {
-    //     const appointment = JSON.parse(localStorage.getItem('appointment'));
-    //     if (appointmentReducer) {
-    //         setAppointment(appointment);
-    //     }
-    // }, []);
-
+    // updates localStorage everytime new appointment is added
     useEffect(() => {
-        localStorage.setItem('appointment', JSON.stringify(appointment));
+        localStorage.setItem(dateInt + timeInt, JSON.stringify(appointment));
         console.log(appointment);
-        const data1 = JSON.parse(localStorage.getItem('appointment'));
     }, [appointment]);
 
-
+    // function to handle button className - used to change button color
     const handleButtonStyle = () => {
-        if (appointment.isClicked) { return 'btn--clicked' }
-        else if (isPause) { return 'btn--pause' }
-        else { return 'btn'}
+        if (appointment && appointment.isClicked) {
+            return 'btn--clicked'
+        }
+        else if (isPause) {
+            return 'btn--pause'
+        }
+        return 'btn'
     }
 
     return (

@@ -1,8 +1,8 @@
 import React from 'react';
 import Scheduler from './Scheduler';
 import ScheduleContext from '../context/schedule-context';
-import visibleDays from '../selectors/visibleDays';
-import scheduleHours from '../selectors/scheduleHours';
+import visibleDays from '../utils/visibleDays';
+import scheduleHours from '../utils/scheduleHours';
 
 
 const MainComponent = () => {

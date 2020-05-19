@@ -7,6 +7,8 @@ const Scheduler = () => {
 
     const { visibleDays, scheduleHours } = useContext(ScheduleContext);
 
+    // console.log(Object.keys(localStorage).length);
+
     return (
         <div className="tab">
             <table>
