@@ -1,6 +1,11 @@
 import moment from 'moment';
 
-export const daySorter = (dateInt, timeInt) => {
+export const daySorter = (date, time) => {
+
+    const dateInt = parseInt(date.slice(4));
+    const splitTime = time.split(':');
+    const timeInt = parseInt(splitTime[0] + splitTime[1]);
+
     const secondSaturday = moment().startOf('month').day('Saturday').add(7,'d').date();
     const fourthSaturday = moment().startOf('month').day('Saturday').add(21,'d').date();
 
@@ -20,5 +25,5 @@ export const daySorter = (dateInt, timeInt) => {
     const isPause = morningPause || afternoonPause;
     const isClosed = sunday || oddSaturday || morningShift || afternoonShift;
 
-    return isPause, isClosed;
+    return isPause, isClosed, dateInt, timeInt;
 }

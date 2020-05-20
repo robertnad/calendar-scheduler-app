@@ -10,20 +10,23 @@ $orange:  #e0b671;
 .red    { background: $red }
 .orange { background: $orange }
 
+
+
+body {
+    display: flex;
+    justify-content: center;
+    background: #ffffff; 
+    padding: 15px;
+}
+
 h1 {
     font-family: Helvetica;
     text-align: center;
 }
 
-body {
-    background: #ecf0f1; 
-    padding: 15px;
-}
-
 table {
     font-family: Helvetica;
     color: #efefef;
-  
     border: 2px solid gray;
     padding: 0;
     border-spacing: 0;
@@ -40,7 +43,7 @@ table {
     }
 
     td {
-        padding: 0.2em; 
+        padding: 0.3em; 
         width: 10em;
         border: 1px solid gray;
     }
@@ -49,13 +52,13 @@ table {
 .dates {
     background: $navy;
     text-transform: uppercase;
-    font-size: 0.8em;
+    font-size: 0.9em;
     text-align: center;
 }
 
 .hours {
     background: $navy;
-    font-size: 0.8em;
+    font-size: 0.9em;
     text-align: center;
     vertical-align: text-top;
 }
