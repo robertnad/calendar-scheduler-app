@@ -1,25 +1,19 @@
 import React, { useContext } from 'react';
 import ScheduleContext from '../context/schedule-context';
 import DayChecker from './DayChecker';
+import TableDates from './TableDates';
 
 
 const Scheduler = () => {
 
     const { visibleDays, scheduleHours } = useContext(ScheduleContext);
 
-    // console.log(Object.keys(localStorage).length);
-
     return (
-        <div className="tab">
+        <div>
             <table>
                 <tbody>
                     
-                    <tr className="dates">
-                        <th></th>
-                        {visibleDays.map(date => (
-                            <th key={date}>{date}</th>
-                        ))}
-                    </tr>
+                    <TableDates />
 
                     {scheduleHours.map(time => (
                         <tr key={time}>
@@ -41,26 +35,3 @@ const Scheduler = () => {
 }
 
 export default Scheduler;
-
-/* {(isNotSunday && !isPairSaturday) ? 
-                (
-                isPairSaturday ?  <MorningHours />
-                    :
-                    (isEvenDate ? <MorningHours /> : <AfternoonHours />)
-                )
-                :
-                false
-            } */
-        
-            // {scheduleHours.map(period => (
-            //     <tr key={period}>
-            //         <td className="hours">{period}</td>
-            //         {
-            //         visibleDays.map(day => (
-            //             <td key={day+period} className="slots">
-            //                 <DayChecker day={day} period={period} />
-            //             </td>
-            //             ))
-            //         }
-            //     </tr>
-            // ))}
