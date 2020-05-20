@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 
-const DayChecker = ({ date, time }) => {
+const DayChecker = ({ date, time, myAppointments }) => {
 
     // formatted time variables from date and time props
     const dateInt = parseInt(date.slice(4));                // turns 'ddd DD' (ex. 'Mon 15') date format into DD (ex. 15) integer
@@ -27,32 +27,15 @@ const DayChecker = ({ date, time }) => {
 
 
     // useState hook for handling appointment state
+    // isDisabled used only for fetching free appointments in localStorage
     const [appointment, setAppointment] = useState({
-        // date: '',
-        // time: '',
-        id: '',
+        id: dateInt + '_' + timeInt,
         isClicked: false,
-        isClickable: isClosed || isPause
+        isDisabled: isClosed || isPause,
+        isTaken: false
     });
 
-
-    // useRef hook for checking previous appointment state - used for limiting number of appointments
-    // const prevAppointmentRef = useRef();
-    // useEffect(() => {
-    //     prevAppointmentRef.current = appointment;
-    // });
-    // const prevAppointment = prevAppointmentRef.current;
-
-    
-
-    // checks if more than 1 appointment in the same day
-    // const dailyAppointmentLimiter = () => {
-    //     if (appointment.date.includes(dateInt)) {
-    //     }
-    // }
-
-
-    // gets stored appointments from local storage and initializes appointment state
+    // gets stored appointments from localStorage and initializes appointment state after refresh
     useEffect(() => {
         const appointment = JSON.parse(localStorage.getItem(dateInt + '_' + timeInt));
         if (appointment) {
@@ -61,35 +44,47 @@ const DayChecker = ({ date, time }) => {
     }, []);
 
 
-    // updates localStorage everytime new appointment is added
+    // updates localStorage everytime new appointment (that is not disabled or taken) is added
     useEffect(() => {
-        if (!appointment.isClickable) {
+        if (!appointment.isDisabled && !appointment.isTaken) {
             localStorage.setItem(dateInt + '_' + timeInt, JSON.stringify(appointment));
         }
-        console.log(appointment);
+        console.log(appointment)
     }, [appointment]);
 
+    // splits appointment id - used for limiting 1/day appointment
+    const dayId = appointment.id.slice(0,2);
 
-    // onclick handler - adds appointment
+    // onclick handler - adds appointment, also handles 1/day and 2/week limits
     const handleAppointment = () => {
-        setAppointment({
-            // date: date,
-            // time: time,
-            id: dateInt + '_' + timeInt,
-            isClicked: true
-        });
+        if (!appointment.isTaken && myAppointments.length < 1 /*myAppointments.length < 2*/) {
+            setAppointment({
+                id: dateInt + '_' + timeInt,
+                isClicked: true,
+                isDisabled: isClosed || isPause
+            });
+            myAppointments.push(dayId);
+
+        } else if (!appointment.isTaken && myAppointments.length < 2 && myAppointments[0] !== dayId) {
+            setAppointment({
+                id: dateInt + '_' + timeInt,
+                isClicked: true,
+                isDisabled: isClosed || isPause
+            });
+            myAppointments.push(dayId);
+        }
         // unclick button - deletes appointment
         if (appointment && appointment.isClicked) {
             setAppointment({
-                // date: '',
-                // time: '',
-                id: '',
-                isClicked: false
+                id: dateInt + '_' + timeInt,
+                isClicked: false,
+                isDisabled: isClosed || isPause
             });
+            myAppointments.splice(myAppointments.indexOf(dayId), 1);
         }
     }
 
-    // function to change button className for css purposes
+    // function to change button className for styling purposes
     const handleButtonStyle = () => {
         if (appointment && appointment.isClicked) {
             return 'btn--clicked'
@@ -97,12 +92,15 @@ const DayChecker = ({ date, time }) => {
         else if (isPause) {
             return 'btn--pause'
         }
+        else if (appointment.isTaken) {
+            return 'btn--taken'
+        }
         return 'btn'
     }
 
     return (
         <>
-            <button className={handleButtonStyle()} onClick={handleAppointment} disabled={isClosed || isPause}></button>
+            <button className={handleButtonStyle()} onClick={handleAppointment} disabled={isClosed || isPause || appointment.isTaken}></button>
         </>
     )
 }
